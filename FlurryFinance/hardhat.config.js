@@ -5,7 +5,7 @@ module.exports = {
     hardhat: {
       chainId: 56,
       forking: {
-        url: "https://speedy-nodes-nyc.moralis.io/64defce6f134fc6861570761/bsc/mainnet/archive",
+        url: "https://speedy-nodes-nyc.moralis.io/***/bsc/mainnet/archive",
         blockNumber: 15484858 
       },
     }
